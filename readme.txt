@@ -8,7 +8,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically creates a WP user account at checkout, based on customer's email address.
+ Increase sales and build customer loyalty by rewarding customers
 
 == Description ==
 
