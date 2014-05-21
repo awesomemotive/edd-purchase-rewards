@@ -4,25 +4,6 @@
  */
 
 /**
- * Outputs the rewards after the payment table
- * 
- * @since  1.0
- * @return void
- */
-function edd_purchase_rewards_load_rewards() {
-	global $post;
-
-	// if shortcode is used on page, don't add it to payment receipt table
-	if ( has_shortcode( $post->post_content, 'edd_purchase_rewards' ) )
-		return;
-
-	// no shortcode, let's load it
-	add_action( 'edd_payment_receipt_after_table', 'edd_purchase_rewards_reward_customer' );
-}
-//add_action( 'template_redirect', 'edd_purchase_rewards_load_rewards' );
-
-
-/**
  * Prepend the text to the success page
  */
 function edd_purchase_rewards_display_reward( $content ) {
@@ -30,7 +11,7 @@ function edd_purchase_rewards_display_reward( $content ) {
 
 	// if shortcode is used on page, don't add it to payment receipt table
 	if ( has_shortcode( $post->post_content, 'edd_purchase_rewards' ) )
-		return;
+		return $content;
 
 	$success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
 
@@ -57,10 +38,10 @@ function edd_purchase_rewards_reward_customer() {
 	global $post;
 
 	// force the customer to share before receiving reward
-	$force_share 	= edd_get_option( 'edd_purchase_rewards_force_share' );
+	$force_share = edd_get_option( 'edd_purchase_rewards_force_share' );
 
-	// customer must share to receive reward
-	if ( $force_share ) {
+	// customer must share to at least 1 social network to be rewarded
+	if ( $force_share && edd_purchase_rewards()->functions->can_reward() ) {
 
 		// if shortcode, return it
 		if ( has_shortcode( $post->post_content, 'edd_purchase_rewards' ) ) {
@@ -72,7 +53,7 @@ function edd_purchase_rewards_reward_customer() {
 		}
 
 	}
-	// show the reward
+	// customer is rewarded without having to share
 	else {
 
 		// if shortcode, return it
@@ -96,48 +77,71 @@ function edd_purchase_rewards_reward_customer() {
 function edd_purchase_rewards_show_reward() {
 	global $post;
 
-	// check to see if we can send emails
-	$can_email =  edd_purchase_rewards()->functions->can_email();
-
-	// check to see if the email has already been sent
-	$email_sent = EDD()->session->get( 'edd_pr_email_sent' );
-
-	// get discount code
-	$discount_code = edd_purchase_rewards()->functions->get_discount();
-
-	// send email if it hasn't already been sent and send email is enabled
-	if ( ! $email_sent && $can_email ) {
-		edd_purchase_rewards()->emails->send();
-
-		// mark as being sent
-		EDD()->session->set( 'edd_pr_email_sent', true );
-	}
-
-	$reward_title 	= edd_get_option( 'edd_purchase_rewards_reward_title', __( 'You\'ve Been Rewarded!', 'edd-purchase-rewards' ) );
-	$reward_message = edd_get_option( 'edd_purchase_rewards_reward_message', __( 'As a token of our appreciation, we\'d like to offer you a discount, which you can use on your next order:', 'edd-purchase-rewards' ) );
-
 	ob_start();
 	?>
+	
+	<?php if ( edd_purchase_rewards()->functions->can_reward() ) : // reward can be given ?>
 
-	<div class="edd-pr">
-		<h2><?php echo esc_attr( $reward_title ); ?></h2>
-		<p><?php echo esc_attr( $reward_message ); ?></p>
-		<h3><?php echo $discount_code; ?></h3>
-	</div>
+		<?php
+			// get discount code. Either generated or normal
+			$discount_code 		= edd_purchase_rewards()->discounts->get_discount();
+
+			$reward_title 		= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_title' ) );
+			$reward_message 	= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_message' ) );
+		?>
+	
+		<?php if ( $discount_code ) : ?>
+			<div class="edd-pr">
+				<h2><?php echo esc_attr( $reward_title ); ?></h2>
+				<p><?php echo $reward_message; ?></p>
+				<h3><?php echo $discount_code; ?></h3>
+			</div>
+		<?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php
+		// sharing enabled
+		$sharing_enabled = edd_get_option( 'edd_purchase_rewards_enable_sharing' );
+
+		// show the sharing icons so a customer can share their purchase
+		if ( $sharing_enabled ) {
+			echo edd_purchase_rewards()->sharing->sharing_icons();
+		}
+	?>
 
 <?php
 	$html = ob_get_clean();
-	return $html;
+	return apply_filters( 'edd_purchase_rewards_show_reward', $html );
 }
 
 /**
- * Clear session variables that we have set when the purchase is complete
- * @return [type] [description]
+ * Actions that run when a purchase is marked as complete
+ *
+ * @since  1.0
+ * @return void
  */
-function edd_purchase_rewards_reset_session() {
-	// clear email
-	EDD()->session->set( 'edd_pr_email_sent', null );
-	// clear sharing
-	EDD()->session->set( 'shared', null );
+function edd_purchase_rewards_complete_purchase( $payment_id ) {
+
+	$user_info 		= edd_get_payment_meta_user_info( $payment_id );
+	$email 			= $user_info['email'];
+
+	// check if force sharing is enabled
+	$force_share 	= edd_get_option( 'edd_purchase_rewards_force_share' );
+	
+	// check to see if we can send emails
+	$can_email 		= edd_purchase_rewards()->functions->can_email();
+
+	// create discount code (if enabled) if customer can be rewarded and customer isn't forced to share purchase
+	if ( edd_purchase_rewards()->functions->can_reward() && ! edd_get_option( 'edd_purchase_rewards_force_share' ) ) {
+
+		edd_purchase_rewards()->discounts->create_discount( $email, $payment_id );
+
+		// send email to customer
+		if ( $can_email ) {
+			edd_purchase_rewards()->emails->send( $email, $payment_id );
+		}
+	}
+
 }
-add_action( 'edd_complete_purchase', 'edd_purchase_rewards_reset_session' );
+add_action( 'edd_complete_purchase', 'edd_purchase_rewards_complete_purchase' );

@@ -9,44 +9,37 @@ class EDD_Purchase_Rewards_Email {
 	 * Send email on successful purchase
 	 *
 	 * @since  1.0
+	 * @todo  add filter for subject
 	 */
-	public function send( $email = '', $subject = '', $message = '' ) {
+	public function send( $email = '', $payment_id = '', $subject = '', $message = '' ) {
+		global $edd_options;
 
-		// retrieve customer's email from the get_customer() function
-		$email 		= edd_purchase_rewards()->functions->get_customer( 'email' );
-
-		// retrieve customer's first_name from the get_customer() function
-		$first_name = edd_purchase_rewards()->functions->get_customer( 'first_name' );
+		// customer email
+		$email 		= ! empty( $email ) ? $email : edd_purchase_rewards()->functions->get_customer( 'email' );
 
 		// email subject
 		$subject 	= __( 'Your Discount Code', 'edd-purchase-rewards' );
 
-		// email message
-		$discount_code	= edd_purchase_rewards()->functions->get_discount();
+		// get discount code
+		$discount_code	= edd_purchase_rewards()->discounts->get_discount( $payment_id );
 		
 		// email message
-		$message 	= $this->email_body( $first_name, $discount_code );
+		$message    = ! empty( $edd_options['edd_purchase_rewards_email'] ) ? $edd_options['edd_purchase_rewards_email'] : __( "Hello {name},\n\nHere is your discount code that will entitle you {discount_amount} off your next purchase:\n\n{discount_code}\n\nEnjoy!\n\n{site_name}\n{site_url}", "edd-purchase-rewards" );
+		// filter message
+		$message    = edd_purchase_rewards()->functions->filter_template_tags( $message, $discount_code, $payment_id );
+
+		$from_name  = get_bloginfo( 'name' );
+		$from_email = get_bloginfo( 'admin_email' );
 
 		$headers   	= array();
-		$headers[] 	= 'From: ' . stripslashes_deep( html_entity_decode( get_bloginfo( 'name' ), ENT_COMPAT, 'UTF-8' ) ) . '<' . get_option( 'admin_email' ) . '>';
+		$headers[] 	= 'From: ' . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
+		$headers[]  = "Reply-To: ". $from_email . "\r\n";
 		$headers   	= apply_filters( 'edd_purchase_rewards_email_headers', $headers );
-
-		wp_mail( $email, $subject, $message, $headers );
-	}
-
-	/**
-	 * The body of the email
-	 * @return string contents of the email body
-	 * @since  1.0
-	 */
-	public function email_body( $first_name = '', $discount_code = '' ) {
-		$default_email_body = __( "Dear", "edd-purchase-rewards" ) . ' ' . $first_name . ",\n\n";
-		$default_email_body .= __( "Below is a discount code to use on your next purchase:", "edd-purchase-rewards" ) . "\n\n";
-		$default_email_body .= $discount_code . "\n\n";
-
-		$default_email_body = apply_filters( 'edd_purchase_rewards_email_body', $default_email_body, $first_name, $discount_code );
 		
-		return $default_email_body;
+		// only send email if discount code exists
+		if ( $discount_code ) {
+			wp_mail( $email, $subject, $message, $headers );
+		}
 	}
 
 }

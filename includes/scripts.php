@@ -7,31 +7,26 @@
  *  @return void
  */
 function edd_purchase_rewards_styles() {
-
 	global $post;
 
-	if ( ! is_object( $post ) ) {
+	if ( ! is_object( $post ) )
 		return;
-	}
-
 	?>
 	<style>
 		.edd-pr {
-			margin-bottom: 2rem;
+			margin-bottom: 4rem;
 		}
 
 		.edd-pr .share {
 			display: inline-block;
 			vertical-align: top;
-			padding: 0 0.5rem;
+			margin-right: 1rem;
 		}
 
-		/* Change the styling on the message when the customer has shared */
 		.edd-pr-message.shared {
-		
+			margin-bottom: 2rem;
 		}
 	</style>
 	<?php
-
 }
 add_action( 'wp_head', 'edd_purchase_rewards_styles' );

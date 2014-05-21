@@ -49,6 +49,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		public $settings;
 		public $shortcodes;
 		public $functions;
+		public $discounts;
 
 		/**
 		 * Main Instance
@@ -72,6 +73,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 				self::$instance->settings 	= new EDD_Purchase_Rewards_Settings;
 				self::$instance->shortcodes = new EDD_Purchase_Rewards_Shortcodes;
 				self::$instance->functions 	= new EDD_Purchase_Rewards_Functions;
+				self::$instance->discounts 	= new EDD_Purchase_Rewards_Discounts;
 			}
 
 			return self::$instance;
@@ -162,6 +164,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-settings.php';
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-shortcodes.php';
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-functions.php';
+			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-discounts.php';
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/scripts.php';
 		}
 
@@ -180,9 +183,9 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		public function activation() {
 			if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
 				// is this plugin active?
-				if ( is_plugin_active( plugin_basename( EDD_PURCHASE_REWARDS_PLUGIN_DIR ) ) ) {
+				if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
 					// deactivate the plugin
-			 		deactivate_plugins( plugin_basename( EDD_PURCHASE_REWARDS_PLUGIN_DIR ) );
+			 		deactivate_plugins( plugin_basename( __FILE__ ) );
 			 		// unset activation notice
 			 		unset( $_GET[ 'activate' ] );
 			 		// display notice
@@ -230,10 +233,10 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 			$mofile_global = WP_LANG_DIR . '/edd-purchase-rewards/' . $mofile;
 
 			if ( file_exists( $mofile_global ) ) {
-				// Look in global /wp-content/languages/edd-auto-register folder
+				// Look in global /wp-content/languages/edd-purchase-rewards folder
 				load_textdomain( 'edd-purchase-rewards', $mofile_global );
 			} elseif ( file_exists( $mofile_local ) ) {
-				// Look in local /wp-content/plugins/edd-auto-register/languages/ folder
+				// Look in local /wp-content/plugins/edd-purchase-rewards/languages/ folder
 				load_textdomain( 'edd-purchase-rewards', $mofile_local );
 			} else {
 				// Load the default language files
@@ -253,7 +256,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		public function plugin_meta( $links, $file ) {
 		    if ( $file == plugin_basename( __FILE__ ) ) {
 		        $plugins_link = array(
-		            '<a title="View more plugins for Easy Digital Downloads by Sumobi" href="https://easydigitaldownloads.com/blog/author/andrewmunro/?ref=166" target="_blank">' . __( 'Author\'s EDD plugins', 'edd-purchase-rewards' ) . '</a>'
+		            '<a title="'. __( 'View more plugins for Easy Digital Downloads by Sumobi', 'edd-purchase-rewards' ) .'" href="https://easydigitaldownloads.com/blog/author/andrewmunro/?ref=166" target="_blank">' . __( 'Author\'s EDD plugins', 'edd-purchase-rewards' ) . '</a>'
 		        );
 
 		        $links = array_merge( $links, $plugins_link );

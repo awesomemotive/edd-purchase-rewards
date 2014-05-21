@@ -7,14 +7,6 @@ class EDD_Purchase_Rewards_Sharing {
 	
 	public function __construct() {
 
-		// add the sharing icons after the content
-	//	add_action( 'edd_payment_receipt_after_table', array( $this, 'sharing_icons' ) );
-
-		// wipe share variable on edd_complete_purchase
-
-		// add CSS styling	
-		
-
 		// add scripts to the footer	
 		add_action( 'wp_footer', array( $this, 'sharing_scripts' ) );
 
@@ -23,10 +15,31 @@ class EDD_Purchase_Rewards_Sharing {
 		add_action( 'wp_ajax_nopriv_sharing_thanks', array( $this, 'sharing_thanks' ) );
 	}
 
+	/**
+	 * Determine which social networks are enabled
+	 * @param  string  $network network name
+	 * @return boolean          true if network exists, false otherwise
+	 */
+	public function is_enabled( $network = '' ) {
+		global $edd_options;
 
+		$networks = array(
+			'twitter',
+			'facebook',
+			'googleplus',
+			'linkedin'
+		);
 
+		$networks = apply_filters( 'edd_purchase_rewards_sharing_networks', $networks );
 
+		if ( $network ) {
+			return in_array( $network, $networks );
+		}
+		elseif ( $networks ) {
+			return true;
+		}
 
+	}
 
 	/**
 	 * Sharing icons
@@ -34,45 +47,31 @@ class EDD_Purchase_Rewards_Sharing {
 	public function sharing_icons() {
 		global $post;
 
-		// // get purchase session
-		// $purchase_session 	= edd_get_purchase_session();
-		// // get purchase ID from key purchase key
-		// $payment_id			= edd_get_purchase_id_by_key( $purchase_session['purchase_key'] );
-		// // get purchase amount
-		// $purchase_amount 	= edd_get_payment_amount( $payment_id );
-
-		// var_dump( $purchase_amount );
-
-	//	global $edd_options;
-		
-
-		//$free_purchases_enabled = edd_get_option( 'edd_purchase_rewards_enable_free_purchases' );
-
-		//var_dump( $free_purchases_enabled );
-
-
-	//	var_dump( $this->can_reward() );
-
-		$twitter_default_text = 'Custom text for Twitter goes here';
+		$twitter_default_text = edd_get_option( 'edd_purchase_rewards_sharing_twitter_message' );
 
 		// URL to share
-		$share_url = get_home_url();
+		$share_url = apply_filters( 'edd_purchase_rewards_share_url', get_home_url( '', '', 'http' ) );
 
-		//echo $share_url;
 		ob_start();
 
-			// customer is allowed to be rewarded
+			/**
+			 * Show correct sharing title and message if the customer can be rewarded.
+			 */
 			if ( edd_purchase_rewards()->functions->can_reward() ) {
 				// if the customer has already shared, show them the sharing thanks title and message
-				if ( $this->has_shared() ) {
+				if ( edd_purchase_rewards()->functions->has_shared() ) {
 					$share_title 	= $this->share_success_title();
 					$share_message 	= $this->share_success_message();
 				}
-				else {
+				elseif ( edd_get_option( 'edd_purchase_rewards_force_share' ) ) {
 					// default sharing title and message
-					$share_title 	= edd_get_option( 'edd_purchase_rewards_sharing_title' );
-					$share_message 	= edd_get_option( 'edd_purchase_rewards_sharing_message' );
-				}	
+					$share_title 	= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_sharing_title' ) );
+					$share_message 	= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_sharing_message' ) );
+				}
+				else {
+					$share_title 	= edd_get_option( 'edd_purchase_rewards_sharing_default_title' );
+					$share_message 	= edd_get_option( 'edd_purchase_rewards_sharing_default_message' );
+				}
 			}
 			// standard social sharing
 			else {
@@ -80,10 +79,8 @@ class EDD_Purchase_Rewards_Sharing {
 				$share_message 	= edd_get_option( 'edd_purchase_rewards_sharing_default_message' );
 			}
 
-			$share_class = $this->has_shared() ? ' shared' : '';
+			$share_class = edd_purchase_rewards()->functions->has_shared() ? ' shared' : '';
 		?>
-
-		
 
 		<div class="edd-pr">
 			<div class="edd-pr-message<?php echo $share_class; ?>">
@@ -92,12 +89,14 @@ class EDD_Purchase_Rewards_Sharing {
 				<?php endif; ?>
 				
 				<?php if ( $share_message ) : ?>
-				<p class="share-message"><?php echo esc_attr( $share_message ); ?></p>
+					<div class="share-message">
+					<?php echo wpautop( $share_message, false ); ?>
+					</div>
 				<?php endif; ?>
 			</div>
 
-			<?php 
-				$twitter_username = '';
+			<?php if ( $this->is_enabled( 'twitter' ) ) : 
+				$twitter_username = edd_get_option( 'edd_purchase_rewards_sharing_twitter_username' );
 				$twitter_count_box = 'vertical';
 				$twitter_button_size = 'medium';
 			?>
@@ -106,8 +105,9 @@ class EDD_Purchase_Rewards_Sharing {
 					Share
 				</a>
 			</div>
+			<?php endif; ?>
 
-			<?php
+			<?php if ( $this->is_enabled( 'facebook' ) ) : 
 				$data_share = 'false';
 				$facebook_button_layout = 'box_count';
 			?>
@@ -115,8 +115,9 @@ class EDD_Purchase_Rewards_Sharing {
 			<div class="share facebook">
 				<div class="fb-like" data-href="<?php echo $share_url; ?>" data-send="true" data-action="like" data-layout="<?php echo $facebook_button_layout; ?>" data-share="<?php echo $data_share; ?>" data-width="" data-show-faces="false"></div>
 			</div>
+			<?php endif; ?>
 
-			<?php 
+			<?php if ( $this->is_enabled( 'googleplus' ) ) : 
 				$googleplus_button_size = 'tall';
 				$google_button_annotation = 'bubble';
 				$google_button_recommendations = 'false';
@@ -124,22 +125,29 @@ class EDD_Purchase_Rewards_Sharing {
 			<div class="share googleplus">
 				<div class="g-plusone" data-recommendations="<?php echo $google_button_recommendations; ?>" data-annotation="<?php echo $google_button_annotation;?>" data-callback="plusOned" data-size="<?php echo $googleplus_button_size; ?>" data-href="<?php echo $share_url; ?>"></div>
 			</div>
+			<?php endif; ?>
 
-			<?php 
+			<?php if ( $this->is_enabled( 'linkedin' ) ) :  
 				$linkedin_counter = 'top';
+				$locale = apply_filters( 'edd_purchase_rewards_locale_linkedin', 'en_US' );
 			?>
+
 			<div class="share linkedin">
-			<script src="http://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+			<?php if( is_ssl() ) : // load https version of linkedin ?>
+				<script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: <?php echo $locale; ?></script>
+			<?php else : ?>
+				<script src="http://platform.linkedin.com/in.js" type="text/javascript">lang: <?php echo $locale; ?></script>
+			<?php endif; ?>
+			
 			<script type="IN/Share" data-counter="<?php echo $linkedin_counter; ?>" data-onSuccess="share" data-url="<?php echo $share_url; ?>"></script>
 			</div>
+			<?php endif; ?>
 
 		</div>
 
 		<?php
 			$html = ob_get_clean();
-
-			return $html;
-			
+			return apply_filters( 'edd_purchase_rewards_sharing_icons', $html );	
 	}
 
 
@@ -149,7 +157,8 @@ class EDD_Purchase_Rewards_Sharing {
 	 * @since 1.0
 	*/
 	public function sharing_scripts() {
-
+		if ( ! ( edd_is_success_page() || ! edd_get_option( 'edd_purchase_rewards_force_share' ) || ! edd_get_option( 'edd_purchase_rewards_enable_sharing' ) ) )
+			return;
 		?>
 		<script type="text/javascript">
 
@@ -157,6 +166,8 @@ class EDD_Purchase_Rewards_Sharing {
 		/**
 		 * Twitter
 		*/
+		
+		if ( $this->is_enabled( 'twitter' ) ) : 
 		?>
 	  	window.twttr = (function (d,s,id) {
 		  var t, js, fjs = d.getElementsByTagName(s)[0];
@@ -168,20 +179,24 @@ class EDD_Purchase_Rewards_Sharing {
 		twttr.ready(function (twttr) {
 		    twttr.events.bind('tweet', function (event) {
 		        jQuery.event.trigger({
-		            type: "productShared",
+		            type: "purchaseShared",
 		            url: event.target.baseURI
 		        });
 		    });
 		});
-
+		<?php endif; ?>
 
 		<?php 
 		/**
 		 * Google +
 		*/
+		if ( $this->is_enabled( 'googleplus' ) ) : 
+
+		$locale = apply_filters( 'edd_purchase_rewards_locale_google', 'en-US' );
+		
 		?>
 		window.___gcfg = {
-		  lang: 'en-US',
+		  lang: '<?php echo $locale; ?>',
 		  parsetags: 'onload'
 		};
 
@@ -194,36 +209,42 @@ class EDD_Purchase_Rewards_Sharing {
 		function plusOned(obj) {
 			console.log(obj);
 			jQuery.event.trigger({
-			    type: "productShared",
+			    type: "purchaseShared",
 			    url: obj.href
 			});
 		}
+		<?php endif; ?>
 
 		<?php 
 		/**
 		 * LinkedIn
 		*/
+		if ( $this->is_enabled( 'linkedin' ) ) : 
 		?>
 		function share(url) {
 			console.log(url);
 		 	jQuery.event.trigger({
-	            type: "productShared",
+	            type: "purchaseShared",
 	            url: url
 	        });
 		}
+		<?php endif; ?>
 
 
 		<?php
 		/**
 		 * Facebook
 		*/
+		if ( $this->is_enabled( 'facebook' ) ) :
+
+		$locale = apply_filters( 'edd_purchase_rewards_locale_facebook', 'en_US' );
 		?>
 
 		(function(d, s, id) {
 		     var js, fjs = d.getElementsByTagName(s)[0];
 		     if (d.getElementById(id)) {return;}
 		     js = d.createElement(s); js.id = id;
-		     js.src = "//connect.facebook.net/en_US/all.js";
+		     js.src = "//connect.facebook.net/<?php echo $locale; ?>/all.js";
 		     fjs.parentNode.insertBefore(js, fjs);
 		 }(document, 'script', 'facebook-jssdk'));
 
@@ -237,23 +258,21 @@ class EDD_Purchase_Rewards_Sharing {
 
 		    FB.Event.subscribe('edge.create', function(href, widget) {
 		        jQuery.event.trigger({
-		            type: "productShared",
+		            type: "purchaseShared",
 		            url: href
 		        });     
 		    });
 		};
+		<?php endif; ?>
 
-		<?php if ( edd_purchase_rewards()->functions->can_reward() ) : ?>
+		<?php if ( edd_purchase_rewards()->functions->can_reward() && edd_get_option( 'edd_purchase_rewards_force_share' ) ) : ?>
 
 		jQuery(document).ready(function ($) {
 
-			jQuery(document).on( 'productShared', function(e) {
-
-			//	if( e.url == window.location.href ) {
+			jQuery(document).on( 'purchaseShared', function(e) {
 
 			    	var postData = {
 			            action: 'sharing_thanks',
-			            nonce: edd_scripts.ajax_nonce
 			        };
 
 			    	$.ajax({
@@ -262,7 +281,6 @@ class EDD_Purchase_Rewards_Sharing {
 		            dataType: "json",
 		            url: edd_scripts.ajaxurl,
 		            success: function ( share_response ) {
-		            	// console.log('hello');
 		            	// console.log( share_response );
 
 		                if( share_response ) {
@@ -278,7 +296,6 @@ class EDD_Purchase_Rewards_Sharing {
 		                       jQuery('.edd-pr-message').addClass('shared');
 		                    } 
 		                    else {
-		                        console.log('failed to share');
 		                        console.log( share_response );
 		                    }
 		                } 
@@ -290,7 +307,6 @@ class EDD_Purchase_Rewards_Sharing {
 		            console.log( data );
 		        });
 
-			//	}
 			});
 		});
 
@@ -301,29 +317,24 @@ class EDD_Purchase_Rewards_Sharing {
 	}
 
 	
-
 	/**
-	 * Sharing thanks message
+	 * Sharing ajax function
 	*/
 	public function sharing_thanks() {
-
-		// check nonce
-		check_ajax_referer( 'edd_ajax_nonce', 'nonce' );
-
-		$can_email =  edd_purchase_rewards()->functions->can_email();
-		
-		// set a variable into the session, so the customer cannot share again and keep getting discounts
-		// It's ok if they purchase again and get another discount, more money for you!
-		$has_shared = EDD()->session->get( 'shared' );
+	
+		// See if the customer has shared already. This is so the customer cannot share again and keep getting discounts
+		$has_shared = edd_purchase_rewards()->functions->has_shared();
 
 		// setup our return array
 		$return = array();
 
-		// User has not shared, the send email to them with the discount code
-		if ( ! $this->has_shared() ) {
-			
+		// User has not shared before
+		if ( ! $has_shared ) {
+			// create discount code if enabled
+			edd_purchase_rewards()->discounts->create_discount();
+
 			// send email if enabled
-			if ( $can_email ) {
+			if ( edd_purchase_rewards()->functions->can_email() ) {
 				edd_purchase_rewards()->emails->send();
 			}
 
@@ -332,30 +343,20 @@ class EDD_Purchase_Rewards_Sharing {
 			$return['success_title'] 	= $this->share_success_title();
 			$return['success_message'] 	= $this->share_success_message();
 
+			// mark purchase as shared
+			update_post_meta( edd_purchase_rewards()->functions->get_payment_id(), 'edd_pr_shared', true );
+
+			do_action( 'edd_purchase_rewards_after_share');
+
 		} else {
 			$return['msg'] = 'Already Shared';
 		}
 		
-		// store boolean into session so the customer can't keep receiving discounts
-		$has_shared = EDD()->session->set( 'shared', true );
-
 		echo json_encode( $return );
 
 		edd_die();
 	}
 
-	/**
-	 * Has the user already shared?
-	 * @return boolean true if user has shared, false otherwise
-	 */
-	public function has_shared() {
-		$has_shared = EDD()->session->get( 'shared' );
-
-		if ( $has_shared )
-			return true;
-
-		return false;
-	}
 
 	/**
 	 * Success Title when download has been shared
@@ -377,10 +378,17 @@ class EDD_Purchase_Rewards_Sharing {
 	*/
 	public function share_success_message() {
 		
-		$message = edd_get_option( 'edd_purchase_rewards_sharing_thanks_message' );
-		
+		// return if no purchase session 
+		if ( ! edd_purchase_rewards()->functions->get_payment_id() )
+			return;
+
+		$message = edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_sharing_thanks_message' ) );
+		$message = wpautop( $message, false );
+
 		// display the discount code
-		$message .= edd_purchase_rewards()->functions->get_discount();
+		$discount = '<h3>' . edd_purchase_rewards()->discounts->get_discount() . '</h3>';
+
+		$message = $message . $discount; 
 
 		return apply_filters( 'edd_purchase_rewards_sharing_thanks_message', $message );
 	}

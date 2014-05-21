@@ -11,15 +11,24 @@ class EDD_Purchase_Rewards_Shortcodes {
 		
 		static $done = false;
 
-		shortcode_atts( array( 'amount' => '', 'description' => '', 'reference' => '', 'context' => '' ), $atts, 'edd_purchase_rewards' );
+		// shortcode_atts( 
+		// 	array( 
+		// 		'amount' => '', 
+		// 		'description' => '', 
+		// 		'reference' => '', 
+		// 		'context' => ''
+		// 	), 
+		// 	$atts, 
+		// 	'edd_purchase_rewards'
+		// );
 
-		$defaults = array(
-			'amount'      => '',
-			'description' => '',
-			'context'     => '',
-			'reference'   => '',
-			'status'      => ''
-		);
+		// $defaults = array(
+		// 	'amount'      => '',
+		// 	'description' => '',
+		// 	'context'     => '',
+		// 	'reference'   => '',
+		// 	'status'      => ''
+		// );
 
 	    // Nothing to do
 	    if ( $done )
@@ -31,7 +40,7 @@ class EDD_Purchase_Rewards_Shortcodes {
 	    if ( $success_page )
 	        $done = true;
 
-		$args = wp_parse_args( $atts, $defaults );
+		//$args = wp_parse_args( $atts, $defaults );
 
 		return edd_purchase_rewards_reward_customer();
 
