@@ -193,6 +193,9 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 				}
 
 			}
+			else {
+				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
+			}
 		}
 
 		/**
@@ -242,6 +245,19 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 				// Load the default language files
 				load_plugin_textdomain( 'edd-purchase-rewards', false, $lang_dir );
 			}
+		}
+
+		/**
+		 * Plugin settings link
+		 *
+		 * @since 1.0
+		*/
+		public function settings_link( $links ) {
+			$plugin_links = array(
+				'<a href="' . admin_url( 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) . '">' . __( 'Settings', 'edd-purchase-rewards' ) . '</a>',
+			);
+
+			return array_merge( $plugin_links, $links );
 		}
 
 		/**

@@ -91,7 +91,8 @@ class EDD_Purchase_Rewards_Settings {
 				'id' 		=> 'edd_purchase_rewards_force_share',
 				'name' 		=> __( 'Force Share For Discount Reward', 'edd-purchase-rewards' ),
 				'desc' 		=> '<p class="description">' . __( 'Customer must share their purchase to at least 1 social network before a reward is given. If Enable Purchase Sharing is not enabled above, it will only show the sharing icons when needed.', 'edd-purchase-rewards' ) . '</p>',
-				'type' 		=> 'checkbox'
+				'type' 		=> 'checkbox',
+				'std'		=> 1
 			),
 			// array(
 			// 	'id' 		=> 'edd_purchase_rewards_enable_free_purchases',
