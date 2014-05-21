@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Purchase Rewards\n"
-"POT-Creation-Date: 2014-05-21 17:21+1200\n"
-"PO-Revision-Date: 2014-05-21 17:21+1200\n"
+"POT-Creation-Date: 2014-05-21 17:39+1200\n"
+"PO-Revision-Date: 2014-05-21 17:39+1200\n"
 "Last-Translator: Andrew Munro, Sumobi <andrew@sumobi.com>\n"
 "Language-Team: Sumobi <andrew@sumobi.com>\n"
 "Language: en_US\n"
@@ -16,23 +16,27 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../edd-purchase-rewards.php:207
+#: ../edd-purchase-rewards.php:210
 #, php-format
 msgid "You must install %sEasy Digital Downloads%s to use %s."
 msgstr ""
 
-#: ../edd-purchase-rewards.php:211
+#: ../edd-purchase-rewards.php:214
 #, php-format
 msgid ""
 "%s requires Easy Digital Downloads Version 1.9 or greater. Please update "
 "Easy Digital Downloads."
 msgstr ""
 
-#: ../edd-purchase-rewards.php:259
+#: ../edd-purchase-rewards.php:257
+msgid "Settings"
+msgstr ""
+
+#: ../edd-purchase-rewards.php:275
 msgid "View more plugins for Easy Digital Downloads by Sumobi"
 msgstr ""
 
-#: ../edd-purchase-rewards.php:259
+#: ../edd-purchase-rewards.php:275
 msgid "Author's EDD plugins"
 msgstr ""
 
@@ -141,43 +145,43 @@ msgid ""
 "only show the sharing icons when needed."
 msgstr ""
 
-#: ../includes/class-settings.php:104
+#: ../includes/class-settings.php:105
 msgid "Email Discount Code To Customer"
 msgstr ""
 
-#: ../includes/class-settings.php:105
+#: ../includes/class-settings.php:106
 msgid ""
 "Email the discount code to the customer. The discount code is also displayed "
 "on the purchase confirmation page"
 msgstr ""
 
-#: ../includes/class-settings.php:110
+#: ../includes/class-settings.php:111
 msgid "Reward Email"
 msgstr ""
 
-#: ../includes/class-settings.php:112
+#: ../includes/class-settings.php:113
 msgid ""
 "Enter the email message you'd like your customers to receive when they "
 "receive their discount code. Use template tags below to customize the email."
 msgstr ""
 
-#: ../includes/class-settings.php:113
+#: ../includes/class-settings.php:114
 msgid "The customer's name"
 msgstr ""
 
-#: ../includes/class-settings.php:114
+#: ../includes/class-settings.php:115
 msgid "The discount code the customer is receiving"
 msgstr ""
 
-#: ../includes/class-settings.php:115
+#: ../includes/class-settings.php:116
 msgid "Your site name"
 msgstr ""
 
-#: ../includes/class-settings.php:116
+#: ../includes/class-settings.php:117
 msgid "Your site's URL"
 msgstr ""
 
-#: ../includes/class-settings.php:117
+#: ../includes/class-settings.php:118
 msgid ""
 "Hello {name},\n"
 "\n"
@@ -191,129 +195,129 @@ msgid ""
 "{site_url}"
 msgstr ""
 
-#: ../includes/class-settings.php:121
+#: ../includes/class-settings.php:122
 msgid "Twitter Message"
 msgstr ""
 
-#: ../includes/class-settings.php:122
+#: ../includes/class-settings.php:123
 msgid ""
 "Custom Twitter Message that will be shown in the twitter popup. The site URL "
 "is already appended to the tweet"
 msgstr ""
 
-#: ../includes/class-settings.php:124
+#: ../includes/class-settings.php:125
 #, php-format
 msgid "I've just purchased from %s"
 msgstr ""
 
-#: ../includes/class-settings.php:129
+#: ../includes/class-settings.php:130
 msgid "Twitter Username"
 msgstr ""
 
-#: ../includes/class-settings.php:130
+#: ../includes/class-settings.php:131
 msgid ""
 "Enter the Twitter username you want the Follow button to use. Leave blank to "
 "disable."
 msgstr ""
 
-#: ../includes/class-settings.php:136
+#: ../includes/class-settings.php:137
 msgid "Default Sharing Title"
 msgstr ""
 
-#: ../includes/class-settings.php:137
+#: ../includes/class-settings.php:138
 msgid ""
 "Title shown when sharing is enabled and no discount is set, or when purchase "
 "does not meet reward requirements."
 msgstr ""
 
-#: ../includes/class-settings.php:144
+#: ../includes/class-settings.php:145
 msgid "Default Sharing Message"
 msgstr ""
 
-#: ../includes/class-settings.php:145
+#: ../includes/class-settings.php:146
 msgid ""
 "Message shown when sharing is enabled and no discount is set, or when "
 "purchase does not meet reward requirements."
 msgstr ""
 
-#: ../includes/class-settings.php:152
+#: ../includes/class-settings.php:153
 msgid "Reward Title"
 msgstr ""
 
-#: ../includes/class-settings.php:153
+#: ../includes/class-settings.php:154
 msgid "Title shown when purchase meets reward requirements."
 msgstr ""
 
-#: ../includes/class-settings.php:155
+#: ../includes/class-settings.php:156
 msgid "You've Been Rewarded!"
 msgstr ""
 
-#: ../includes/class-settings.php:160
+#: ../includes/class-settings.php:161
 msgid "Reward Message"
 msgstr ""
 
-#: ../includes/class-settings.php:161
+#: ../includes/class-settings.php:162
 msgid "Message shown when purchase meets reward requirements."
 msgstr ""
 
-#: ../includes/class-settings.php:164
+#: ../includes/class-settings.php:165
 msgid ""
 "We'd like to offer you a {discount_amount} discount which you can use on "
 "your next purchase:"
 msgstr ""
 
-#: ../includes/class-settings.php:168
+#: ../includes/class-settings.php:169
 msgid "Reward Sharing Title"
 msgstr ""
 
-#: ../includes/class-settings.php:169
+#: ../includes/class-settings.php:170
 msgid ""
 "Title shown when sharing is enabled and purchase meets reward requirements"
 msgstr ""
 
-#: ../includes/class-settings.php:172
+#: ../includes/class-settings.php:173
 msgid "Share for a discount on your next purchase!"
 msgstr ""
 
-#: ../includes/class-settings.php:176
+#: ../includes/class-settings.php:177
 msgid "Reward Sharing Message"
 msgstr ""
 
-#: ../includes/class-settings.php:177
+#: ../includes/class-settings.php:178
 msgid ""
 "Message shown when sharing is enabled and purchase meets reward requirements"
 msgstr ""
 
-#: ../includes/class-settings.php:180
+#: ../includes/class-settings.php:181
 msgid ""
 "We'd like to offer you a {discount_amount} discount which you can use on "
 "your next purchase, just for sharing!"
 msgstr ""
 
-#: ../includes/class-settings.php:184
+#: ../includes/class-settings.php:185
 msgid "Reward Sharing Thanks Title"
 msgstr ""
 
-#: ../includes/class-settings.php:185
+#: ../includes/class-settings.php:186
 msgid ""
 "Title shown when purchase has met reward requirements and the customer has "
 "shared their purchase"
 msgstr ""
 
-#: ../includes/class-settings.php:188
+#: ../includes/class-settings.php:189
 msgid "Thanks for sharing!"
 msgstr ""
 
-#: ../includes/class-settings.php:192
+#: ../includes/class-settings.php:193
 msgid "Reward Sharing Thanks Message"
 msgstr ""
 
-#: ../includes/class-settings.php:193
+#: ../includes/class-settings.php:194
 msgid ""
 "Message shown when purchase has met reward requirements and the customer has "
 "shared their purchase"
 msgstr ""
 
-#: ../includes/class-settings.php:196
+#: ../includes/class-settings.php:197
 msgid "Here's your {discount_amount} discount code"
 msgstr ""
