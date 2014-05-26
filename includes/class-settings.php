@@ -59,7 +59,7 @@ class EDD_Purchase_Rewards_Settings {
 			array(
 				'id' 		=> 'edd_purchase_rewards_generate_discount',
 				'name' 		=> __( 'Create Discount Code', 'edd-purchase-rewards' ),
-				'desc' 		=> '<p class="description">' . __( 'Create a unique, one-time use discount code for the customer. This will overrride the discount code field above.', 'edd-purchase-rewards' ) . '</p>',
+				'desc' 		=> '<p class="description">' . __( 'Create a unique, one-time use discount code for the customer. This will override the discount code field above.', 'edd-purchase-rewards' ) . '</p>',
 				'type' 		=> 'checkbox'
 			),
 			array(

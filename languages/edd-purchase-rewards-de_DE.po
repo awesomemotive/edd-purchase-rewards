@@ -2,10 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Purchase Rewards\n"
 "POT-Creation-Date: 2014-05-21 17:39+1200\n"
-"PO-Revision-Date: 2014-05-26 11:06+0100\n"
+"PO-Revision-Date: 2014-05-25 09:51+0100\n"
 "Last-Translator: Carsten Scheuer <scheuer@inveris.de>\n"
-"Language-Team: Sumobi <andrew@sumobi.com>\n"
-"Language: en_US\n"
+"Language-Team: Carsten Scheuer <scheuer@inveris.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,12 +13,14 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Language: de\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../edd-purchase-rewards.php:210
 #, php-format
 msgid "You must install %sEasy Digital Downloads%s to use %s."
 msgstr ""
+"Du musst %sEasy Digital Downloads%s installieren, um %s nutzen zu können."
 
 #: ../edd-purchase-rewards.php:214
 #, php-format
@@ -27,27 +28,29 @@ msgid ""
 "%s requires Easy Digital Downloads Version 1.9 or greater. Please update "
 "Easy Digital Downloads."
 msgstr ""
+"%s benötigt Easy Digital Downloads Version 1.9 oder höher. Bitte "
+"aktualisiere Easy Digital Downloads."
 
 #: ../edd-purchase-rewards.php:257
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: ../edd-purchase-rewards.php:275
 msgid "View more plugins for Easy Digital Downloads by Sumobi"
-msgstr ""
+msgstr "Weitere Plugins für Easy Digital Downloads von Sumobi anzeigen"
 
 #: ../edd-purchase-rewards.php:275
 msgid "Author's EDD plugins"
-msgstr ""
+msgstr "EDD-Plugins des Autors"
 
 #: ../includes/class-discounts.php:79 ../includes/class-discounts.php:109
 #, php-format
 msgid "Discount code given: %s"
-msgstr ""
+msgstr "Angegebener Gutscheincode: %s"
 
 #: ../includes/class-email.php:21
 msgid "Your Discount Code"
-msgstr ""
+msgstr "Dein Gutscheincode"
 
 #: ../includes/class-email.php:27
 msgid ""
@@ -63,80 +66,97 @@ msgid ""
 "{site_name}\n"
 "{site_url}"
 msgstr ""
+"Hallo {name},\n"
+"\n"
+"hier ist dein Gutscheincode, mit dem du bei deiner nächsten Bestellung "
+"{discount_amount} sparen kannst:\n"
+"\n"
+"{discount_code}\n"
+"\n"
+"Viel Spaß!\n"
+"\n"
+"{site_name}\n"
+"{site_url}"
 
 #: ../includes/class-settings.php:27
 msgid "Select discount"
-msgstr ""
+msgstr "Gutschein auswählen"
 
 #: ../includes/class-settings.php:35
 msgid "No discounts found"
-msgstr ""
+msgstr "Keine Gutscheine gefunden"
 
 #: ../includes/class-settings.php:46
 msgid "Minimum Purchase Amount"
-msgstr ""
+msgstr "Mindestbetrag des Einkaufs"
 
 #: ../includes/class-settings.php:47
 msgid ""
 "Set the minimum purchase amount a customer must reach before a purchase "
 "reward is given. Leave blank for no minimum amount."
 msgstr ""
+"Gib den Mindestbetrag an, den ein Kunde pro Einkauf erreichen muss, um eine "
+"Belohnung zu erhalten (leer lassen für keinen Mindestbetrag)."
 
 #: ../includes/class-settings.php:54
 msgid "Discount Code"
-msgstr ""
+msgstr "Gutscheincode"
 
 #: ../includes/class-settings.php:55
 msgid "Select the discount code that the customer will receive."
-msgstr ""
+msgstr "Wähle den Gutscheincode aus, den der Kunde erhalten soll."
 
 #: ../includes/class-settings.php:61
 msgid "Create Discount Code"
-msgstr ""
+msgstr "Gutscheincode erstellen"
 
 #: ../includes/class-settings.php:62
 msgid ""
 "Create a unique, one-time use discount code for the customer. This will "
-"override the discount code field above."
+"overrride the discount code field above."
 msgstr ""
+"Eindeutigen, einmalig nutzbaren Gutscheincode für den Kunden erstellen "
+"(überschreibt die vorherige Gutscheincode-Angabe)."
 
 #: ../includes/class-settings.php:67
 msgid "Discount Type"
-msgstr ""
+msgstr "Gutscheinart"
 
 #: ../includes/class-settings.php:68
 msgid "Select the discount type for the discount code that will be created."
-msgstr ""
+msgstr "Wähle die Rabattart des Gutscheins, der erstellt wird."
 
 #: ../includes/class-settings.php:71
 msgid "Percentage"
-msgstr ""
+msgstr "Prozentsatz"
 
 #: ../includes/class-settings.php:72
 msgid "Flat"
-msgstr ""
+msgstr "Pauschale"
 
 #: ../includes/class-settings.php:78
 msgid "Discount Amount"
-msgstr ""
+msgstr "Rabattbetrag"
 
 #: ../includes/class-settings.php:79
 msgid "Enter the discount amount for the discount code that will be created."
-msgstr ""
+msgstr "Gib den Rabattbetrag für den Gutscheincode ein, der erstellt wird."
 
 #: ../includes/class-settings.php:86
 msgid "Enable Purchase Sharing"
-msgstr ""
+msgstr "Teilen des Einkaufs aktivieren"
 
 #: ../includes/class-settings.php:87
 msgid ""
 "This will display the sharing icons, regardless of whether the customer must "
 "share their purchase for a reward."
 msgstr ""
+"Hiermit werden Teilen-Icons angezeigt, unabhängig davon ob die Kunden ihren "
+"Einkauf teilen müssen oder nicht."
 
 #: ../includes/class-settings.php:92
 msgid "Force Share For Discount Reward"
-msgstr ""
+msgstr "Teilen ist Voraussetzung für den Erhalt eines Gutscheincodes"
 
 #: ../includes/class-settings.php:93
 msgid ""
@@ -144,42 +164,50 @@ msgid ""
 "reward is given. If Enable Purchase Sharing is not enabled above, it will "
 "only show the sharing icons when needed."
 msgstr ""
+"Kunden müssen ihren Einkauf bei mindestens einem Social Network teilen, um "
+"eine Belohnung zu erhalten. Wenn das Teilen des Einkaufs nicht aktiviert ist "
+"(siehe oben), werden die Teilen-Icons nur eingeblendet wenn nötig."
 
 #: ../includes/class-settings.php:105
 msgid "Email Discount Code To Customer"
-msgstr ""
+msgstr "Gutscheincode per E-Mail"
 
 #: ../includes/class-settings.php:106
 msgid ""
 "Email the discount code to the customer. The discount code is also displayed "
 "on the purchase confirmation page"
 msgstr ""
+"Gutscheincode per E-Mail an Kunden senden. Der Gutscheincode wird ebenfalls "
+"auf der Kaufbestätigungsseite angezeigt."
 
 #: ../includes/class-settings.php:111
 msgid "Reward Email"
-msgstr ""
+msgstr "Belohnungs-E-Mail"
 
 #: ../includes/class-settings.php:113
 msgid ""
 "Enter the email message you'd like your customers to receive when they "
 "receive their discount code. Use template tags below to customize the email."
 msgstr ""
+"Hinterlege die Nachricht, die Kunden zusammen mit ihrem Gutscheincode "
+"erhalten sollen. Nutze die folgenden Template-Tags um die E-Mail zu "
+"individualisieren."
 
 #: ../includes/class-settings.php:114
 msgid "The customer's name"
-msgstr ""
+msgstr "Der Name des Kunden"
 
 #: ../includes/class-settings.php:115
 msgid "The discount code the customer is receiving"
-msgstr ""
+msgstr "Der Gutscheincode, den der Kunde erhält"
 
 #: ../includes/class-settings.php:116
 msgid "Your site name"
-msgstr ""
+msgstr "Name deiner Website"
 
 #: ../includes/class-settings.php:117
 msgid "Your site's URL"
-msgstr ""
+msgstr "URL deiner Website"
 
 #: ../includes/class-settings.php:118
 msgid ""
@@ -194,130 +222,165 @@ msgid ""
 "{site_name}\n"
 "{site_url}"
 msgstr ""
+"Hallo {name},\n"
+"\n"
+"hier is dein Gutscheincode, den du bei deiner nächsten Bestellung nutzen "
+"kannst:\n"
+"\n"
+"{discount_code}\n"
+"\n"
+"Viel Spaß!\n"
+"\n"
+"{site_name}\n"
+"{site_url}"
 
 #: ../includes/class-settings.php:122
 msgid "Twitter Message"
-msgstr ""
+msgstr "Twitter-Nachricht"
 
 #: ../includes/class-settings.php:123
 msgid ""
 "Custom Twitter Message that will be shown in the twitter popup. The site URL "
 "is already appended to the tweet"
 msgstr ""
+"Individuelle Nachricht, die im Twitter-Popup angezeigt wird. Die URL der "
+"Website wird automatisch an den Tweet angehangen."
 
 #: ../includes/class-settings.php:125
 #, php-format
 msgid "I've just purchased from %s"
-msgstr ""
+msgstr "Ich habe gerade bei %s eingekauft"
 
 #: ../includes/class-settings.php:130
 msgid "Twitter Username"
-msgstr ""
+msgstr "Twitter-Benutzername"
 
 #: ../includes/class-settings.php:131
 msgid ""
 "Enter the Twitter username you want the Follow button to use. Leave blank to "
 "disable."
 msgstr ""
+"Gib den Twitter-Benutzernamen ein, der für den Folgen-Button genutzt werden "
+"soll (leer lassen zum Deaktivieren)."
 
 #: ../includes/class-settings.php:137
 msgid "Default Sharing Title"
-msgstr ""
+msgstr "Standard-Teilen-Titel"
 
 #: ../includes/class-settings.php:138
 msgid ""
 "Title shown when sharing is enabled and no discount is set, or when purchase "
 "does not meet reward requirements."
 msgstr ""
+"Titel der angezeigt wird, wenn das Teilen aktiviert, aber kein Rabatt "
+"gesetzt ist oder wenn der Einkauf nicht die nötigen Voraussetzungen erfüllt."
 
 #: ../includes/class-settings.php:145
 msgid "Default Sharing Message"
-msgstr ""
+msgstr "Standard-Teilen-Meldung"
 
 #: ../includes/class-settings.php:146
 msgid ""
 "Message shown when sharing is enabled and no discount is set, or when "
 "purchase does not meet reward requirements."
 msgstr ""
+"Meldung die angezeigt wird, wenn das Teilen aktiviert, aber kein Rabatt "
+"gesetzt ist oder wenn der Einkauf nicht die nötigen Voraussetzungen erfüllt."
 
 #: ../includes/class-settings.php:153
 msgid "Reward Title"
-msgstr ""
+msgstr "Belohnungs-Titel"
 
 #: ../includes/class-settings.php:154
 msgid "Title shown when purchase meets reward requirements."
 msgstr ""
+"Titel, der angezeigt wird wenn der Einkauf die nötigen Voraussetzungen "
+"erfüllt."
 
 #: ../includes/class-settings.php:156
 msgid "You've Been Rewarded!"
-msgstr ""
+msgstr "Du erhältst ein Dankeschön!"
 
 #: ../includes/class-settings.php:161
 msgid "Reward Message"
-msgstr ""
+msgstr "Belohnungs-Meldung"
 
 #: ../includes/class-settings.php:162
 msgid "Message shown when purchase meets reward requirements."
 msgstr ""
+"Meldung, die angezeigt wird wenn der Einkauf die nötigen Voraussetzungen "
+"erfüllt."
 
 #: ../includes/class-settings.php:165
 msgid ""
 "We'd like to offer you a {discount_amount} discount which you can use on "
 "your next purchase:"
 msgstr ""
+"Wir würden dir gerne einen Rabatt von {discount_amount} bei deiner nächsten "
+"Bestellung einräumen:"
 
 #: ../includes/class-settings.php:169
 msgid "Reward Sharing Title"
-msgstr ""
+msgstr "Belohnung-Teilen-Titel"
 
 #: ../includes/class-settings.php:170
 msgid ""
 "Title shown when sharing is enabled and purchase meets reward requirements"
 msgstr ""
+"Titel der angezeigt wird, wenn das Teilen aktiviert ist und der Einkauf die "
+"nötigen Voraussetzungen erfüllt."
 
 #: ../includes/class-settings.php:173
 msgid "Share for a discount on your next purchase!"
-msgstr ""
+msgstr "Teilen, um einen Gutschein für deinen nächsten Einkauf zu erhalten!"
 
 #: ../includes/class-settings.php:177
 msgid "Reward Sharing Message"
-msgstr ""
+msgstr "Belohnung-Teilen-Meldung"
 
 #: ../includes/class-settings.php:178
 msgid ""
 "Message shown when sharing is enabled and purchase meets reward requirements"
 msgstr ""
+"Meldung die angezeigt wird, wenn das Teilen aktiviert ist und der Einkauf "
+"die nötigen Voraussetzungen erfüllt."
 
 #: ../includes/class-settings.php:181
 msgid ""
 "We'd like to offer you a {discount_amount} discount which you can use on "
 "your next purchase, just for sharing!"
 msgstr ""
+"Wir würden dir gerne einen Rabatt von {discount_amount} bei deiner nächsten "
+"Bestellung einräumen, nur für's Teilen!"
 
 #: ../includes/class-settings.php:185
 msgid "Reward Sharing Thanks Title"
-msgstr ""
+msgstr "Belohnung-Teilen-Dank-Titel"
 
 #: ../includes/class-settings.php:186
 msgid ""
 "Title shown when purchase has met reward requirements and the customer has "
 "shared their purchase"
 msgstr ""
+"Titel der angezeigt wird, wenn der Einkauf die nötigen Voraussetzungen "
+"erfüllt und der Kunde seinen Einkauf geteilt hat"
 
 #: ../includes/class-settings.php:189
 msgid "Thanks for sharing!"
-msgstr ""
+msgstr "Danke für's Teilen!"
 
 #: ../includes/class-settings.php:193
 msgid "Reward Sharing Thanks Message"
-msgstr ""
+msgstr "Belohnung-Teilen-Dank-Meldung"
 
 #: ../includes/class-settings.php:194
 msgid ""
 "Message shown when purchase has met reward requirements and the customer has "
 "shared their purchase"
 msgstr ""
+"Meldung die angezeigt wird, wenn der Einkauf die nötigen Voraussetzungen "
+"erfüllt und der Kunde seinen Einkauf geteilt hat"
 
 #: ../includes/class-settings.php:197
 msgid "Here's your {discount_amount} discount code"
-msgstr ""
+msgstr "Hier ist dein {discount_amount} Gutscheincode"
