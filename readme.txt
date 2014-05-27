@@ -87,6 +87,7 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 
 = 1.0.1 =
 New: German language files. Thanks to Carsten Scheuer (mirozoo)
+Fix: Typo on settings page. Thanks to Carsten Scheuer (mirozoo)
 
 = 1.0 =
 * Initial release
