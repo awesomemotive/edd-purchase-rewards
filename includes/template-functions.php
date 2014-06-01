@@ -133,7 +133,7 @@ function edd_purchase_rewards_complete_purchase( $payment_id ) {
 	$can_email 		= edd_purchase_rewards()->functions->can_email();
 
 	// create discount code (if enabled) if customer can be rewarded and customer isn't forced to share purchase
-	if ( edd_purchase_rewards()->functions->can_reward() && ! edd_get_option( 'edd_purchase_rewards_force_share' ) ) {
+	if ( edd_purchase_rewards()->functions->can_reward( $payment_id ) && ! edd_get_option( 'edd_purchase_rewards_force_share' ) ) {
 
 		edd_purchase_rewards()->discounts->create_discount( $email, $payment_id );
 
