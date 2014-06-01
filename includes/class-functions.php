@@ -28,9 +28,6 @@ class EDD_Purchase_Rewards_Functions {
 		// enable for free purchases
 		$enable_free_purchases 	= edd_get_option( 'edd_purchase_rewards_enable_free_purchases', false );
 
-		// get purchase amount
-		$purchase_amount 			= edd_get_payment_amount( $this->get_payment_id() );
-
 		// minimum purchase amount
 		$minimum_purchase_amount 	= edd_get_option( 'edd_purchase_rewards_minimum_purchase_amount' );
 
