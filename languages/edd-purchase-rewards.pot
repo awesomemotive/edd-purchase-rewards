@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Purchase Rewards\n"
-"POT-Creation-Date: 2014-05-21 17:39+1200\n"
-"PO-Revision-Date: 2014-05-26 11:06+0100\n"
-"Last-Translator: Carsten Scheuer <scheuer@inveris.de>\n"
+"POT-Creation-Date: 2014-07-13 17:59+1200\n"
+"PO-Revision-Date: 2014-07-13 17:59+1200\n"
+"Last-Translator: \n"
 "Language-Team: Sumobi <andrew@sumobi.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.3\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -40,9 +40,14 @@ msgstr ""
 msgid "Author's EDD plugins"
 msgstr ""
 
-#: ../includes/class-discounts.php:79 ../includes/class-discounts.php:109
+#: ../includes/class-discounts.php:65 ../includes/class-discounts.php:95
 #, php-format
 msgid "Discount code given: %s"
+msgstr ""
+
+#: ../includes/class-discounts.php:153
+#, php-format
+msgid "%sAvailable discount codes%s"
 msgstr ""
 
 #: ../includes/class-email.php:21

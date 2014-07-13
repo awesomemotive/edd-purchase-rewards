@@ -84,6 +84,11 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 1. The one-time use, unqique discount code is created just for the customer
 1. A payment note is recorded showing the discount code that was stored against the purchase
 
+== Upgrade Notice ==
+
+= 1.0.2 =
+New [edd_purchase_rewards_discounts] for showing customer's their available discount codes
+
 == Changelog ==
 
 = 1.0.2 =
