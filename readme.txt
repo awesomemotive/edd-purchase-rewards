@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: easy digital downloads, digital downloads, e-downloads, edd, sumobi, purchase, e-commerce
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ A minimum purchase amount can be set, and you can also force the customer to sha
 1. Set a minimum purchase amount before the customer receives the discount
 1. Select between an existing discount code, or auto generate one, flat or percentage
 1. Choose to send the discount to the customer via email
+1. Show the customer their available discount codes via the [edd_purchase_rewards_discounts] shortcode
 1. Customize the reward email
 1. Customize the twitter message
 1. Customize the default sharing title
@@ -84,6 +85,11 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 1. A payment note is recorded showing the discount code that was stored against the purchase
 
 == Changelog ==
+
+= 1.0.2 =
+New: [edd_purchase_rewards_discounts] for showing customer's their available discount codes
+Fix: Discount code not being generated in some instances with PayPal. Thanks to Carsten Scheuer (mirozoo)
+Tweak: Added additional check before outputting the reward
 
 = 1.0.1 =
 New: German language files. Thanks to Carsten Scheuer (mirozoo)

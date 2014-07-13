@@ -32,25 +32,11 @@ class EDD_Purchase_Rewards_Discounts {
 		}
 		// code has not been stored yet
 		else {
-			// if ( $generate_discount && $generated_code ) {
-			// 	$code = edd_get_discount_code( $generated_code );
-			// }
 			// retrieve pre-selected discount
 			if ( $discount_code && ! $generate_discount ) {
 				$code = edd_get_discount_code( $discount_code );
 			}
 		}
-
-
-		//var_dump( $generated_code );
-
-		// if ( $generate_discount && $generated_code ) {
-		// 	$code = edd_get_discount_code( $generated_code );
-		// }
-		// // retrieve pre-selected discount
-		// elseif ( $discount_code && ! $generate_discount ) {
-		// 	$code = edd_get_discount_code( $discount_code );
-		// }
 
 		// return our code
 		if ( isset( $code ) ) {
@@ -139,4 +125,40 @@ class EDD_Purchase_Rewards_Discounts {
 		return false;
 	}
 
+	/**
+	 * Whether or not the discount code can be used
+	 * @param  int  $code_id discount code
+	 * @return boolean
+	 */
+	public function discount_code_used( $code_id = null ) {
+		$max_uses = get_post_meta( $code_id, '_edd_discount_max_uses', true );
+		$uses     = get_post_meta( $code_id, '_edd_discount_uses', true );
+
+		// uses matches the max uses, therefore discount code cannot be used anymore
+		if ( $uses == $max_uses ) {
+			return (boolean) true;
+		}
+
+		return (boolean) false;
+	}
+
+	/**
+	 * Get the HTML for showing the discounts
+	 * @param  array $discount_codes The array of discount codes
+	 * @return string
+	 */
+	public function get_discount_code_html( $discount_codes ) {
+		ob_start();
+	
+		echo apply_filters( 'edd_purchase_rewards_show_discounts_heading', sprintf( __( '%sAvailable discounts%s', 'edd-purchase-rewards' ), '<h2>', '</h2>' ) );
+	?>
+		<ul class="edd-pr-discounts">
+			<?php foreach ( $discount_codes as $code ) : ?>
+				<li><?php echo $code; ?></li>
+			<?php endforeach; ?>
+		</ul>
+	<?php
+		$html = ob_get_clean();
+		return apply_filters( 'edd_purchase_rewards_show_discounts_html', $html, $discount_codes );	
+	}
 }

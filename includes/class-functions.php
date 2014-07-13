@@ -29,7 +29,7 @@ class EDD_Purchase_Rewards_Functions {
 		$enable_free_purchases 	= edd_get_option( 'edd_purchase_rewards_enable_free_purchases', false );
 
 		// minimum purchase amount
-		$minimum_purchase_amount 	= edd_get_option( 'edd_purchase_rewards_minimum_purchase_amount' );
+		$minimum_purchase_amount = edd_get_option( 'edd_purchase_rewards_minimum_purchase_amount' );
 
 		// one of two discount options must be enabled
 		if ( edd_get_option( 'edd_purchase_rewards_discount_code' ) || edd_get_option( 'edd_purchase_rewards_generate_discount' ) ) {
@@ -111,13 +111,13 @@ class EDD_Purchase_Rewards_Functions {
 	 */
 	public function filter_template_tags( $text = '', $discount_code = null, $payment_id = '' ) {
 							
-		$code 				= edd_get_option( 'edd_purchase_rewards_discount_code' );
+		$code               = edd_get_option( 'edd_purchase_rewards_discount_code' );
 
 		$generate_discount 	= edd_get_option( 'edd_purchase_rewards_generate_discount' );
-		$type 				= edd_get_option( 'edd_purchase_rewards_discount_type' );
+		$type               = edd_get_option( 'edd_purchase_rewards_discount_type' );
 		
 		// this needs to pull the information from the database if discount code has been generated
-		$amount 			= edd_get_option( 'edd_purchase_rewards_discount_amount' );
+		$amount             = edd_get_option( 'edd_purchase_rewards_discount_amount' );
 
 		// payment ID
 		$payment_id = ! empty( $payment_id ) ? $payment_id : $this->get_payment_id();
