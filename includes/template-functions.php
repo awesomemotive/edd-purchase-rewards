@@ -16,7 +16,7 @@ function edd_purchase_rewards_display_reward( $content ) {
 	$success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
 
 	// make sure we only add it to the success page
-	if ( $post && $success_page && is_main_query() && ! post_password_required() ) {
+	if ( $post && $success_page && is_main_query() && ! post_password_required() && in_the_loop() ) {
 		// get the greeting
 		$new_content = edd_purchase_rewards_reward_customer();
 		// prepend it to the content and return

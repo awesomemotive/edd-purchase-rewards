@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: easy digital downloads, digital downloads, e-downloads, edd, sumobi, purchase, e-commerce
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 1.0.2
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,10 +86,19 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-New [edd_purchase_rewards_discounts] for showing customer's their available discount codes
+= 1.0.4 =
+Fix: Previous check added for v1.0.2 never actually made it into plugin update
+
+= 1.0.3 =
+Minor tweak to size of shortcode heading
 
 == Changelog ==
+
+= 1.0.4 =
+Fix: Previous check added for v1.0.2 never actually made it into plugin update.
+
+= 1.0.3 =
+Tweak: Changed size of heading to h4. You can also modify this through the edd_purchase_rewards_show_discounts_heading filter
 
 = 1.0.2 =
 New: [edd_purchase_rewards_discounts] for showing customer's their available discount codes

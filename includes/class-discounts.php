@@ -150,7 +150,7 @@ class EDD_Purchase_Rewards_Discounts {
 	public function get_discount_code_html( $discount_codes ) {
 		ob_start();
 	
-		echo apply_filters( 'edd_purchase_rewards_show_discounts_heading', sprintf( __( '%sAvailable discount codes%s', 'edd-purchase-rewards' ), '<h2>', '</h2>' ) );
+		echo apply_filters( 'edd_purchase_rewards_show_discounts_heading', sprintf( __( '%sAvailable discount codes%s', 'edd-purchase-rewards' ), '<h4>', '</h4>' ) );
 	?>
 		<ul class="edd-pr-discounts">
 			<?php foreach ( $discount_codes as $code ) : ?>
