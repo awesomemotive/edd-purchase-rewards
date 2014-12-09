@@ -157,8 +157,15 @@ class EDD_Purchase_Rewards_Sharing {
 	 * @since 1.0
 	*/
 	public function sharing_scripts() {
-		if ( ! ( edd_is_success_page() || ! edd_get_option( 'edd_purchase_rewards_force_share' ) || ! edd_get_option( 'edd_purchase_rewards_enable_sharing' ) ) )
+		
+		if ( ! edd_is_success_page() ) {
 			return;
+		}
+
+		if ( ! ( edd_get_option( 'edd_purchase_rewards_force_share' ) || edd_get_option( 'edd_purchase_rewards_enable_sharing' ) ) ) {
+			return;
+		}
+
 		?>
 		<script type="text/javascript">
 

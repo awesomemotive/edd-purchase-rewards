@@ -86,13 +86,13 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 
 == Upgrade Notice ==
 
-= 1.0.4 =
-Fix: Previous check added for v1.0.2 never actually made it into plugin update
-
-= 1.0.3 =
-Minor tweak to size of shortcode heading
+= 1.0.5 =
+Fix: When "Force Share For Discount Reward" was not enabled the sharing script loaded onto other pages. This caused a conflict with EDD Social Discounts.
 
 == Changelog ==
+
+= 1.0.5 =
+Fix: When "Force Share For Discount Reward" was not enabled the sharing script loaded onto other pages. This caused a conflict with EDD Social Discounts.
 
 = 1.0.4 =
 Fix: Previous check added for v1.0.2 never actually made it into plugin update.
