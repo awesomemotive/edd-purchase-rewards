@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Purchase Rewards
 Plugin URI: http://sumobi.com/shop/edd-purchase-rewards/
 Description: Increase sales and build customer loyalty by rewarding customers
-Version: 1.0.4
+Version: 1.0.5
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 License: GPL-2.0+
@@ -34,7 +34,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.4';
+		private $version = '1.0.5';
 
 		/**
 		 * Plugin Title
