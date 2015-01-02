@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Purchase Rewards
 Plugin URI: http://sumobi.com/shop/edd-purchase-rewards/
 Description: Increase sales and build customer loyalty by rewarding customers
-Version: 1.0.5
+Version: 1.0.6
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 License: GPL-2.0+
@@ -34,7 +34,7 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.5';
+		private $version = '1.0.6';
 
 		/**
 		 * Plugin Title
@@ -138,8 +138,6 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		 * @return void
 		 */
 		private function hooks() {
-			// activation
-			add_action( 'admin_init', array( $this, 'activation' ) );
 
 			// plugin meta
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta' ), 10, 2 );
@@ -166,53 +164,6 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-functions.php';
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/class-discounts.php';
 			require_once EDD_PURCHASE_REWARDS_PLUGIN_DIR . 'includes/scripts.php';
-		}
-
-		/**
-		 * Activation function fires when the plugin is activated.
-		 *
-		 * This function is fired when the activation hook is called by WordPress,
-		 * it flushes the rewrite rules and disables the plugin if EDD isn't active
-		 * and throws an error.
-		 *
-		 * @since 1.0
-		 * @access public
-		 *
-		 * @return void
-		 */
-		public function activation() {
-			if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
-				// is this plugin active?
-				if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-					// deactivate the plugin
-			 		deactivate_plugins( plugin_basename( __FILE__ ) );
-			 		// unset activation notice
-			 		unset( $_GET[ 'activate' ] );
-			 		// display notice
-			 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-				}
-
-			}
-			else {
-				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
-			}
-		}
-
-		/**
-		 * Admin notices
-		 *
-		 * @since 1.0
-		*/
-		public function admin_notices() {
-			$edd_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/easy-digital-downloads/easy-digital-downloads.php', false, false );
-
-			if ( ! is_plugin_active('easy-digital-downloads/easy-digital-downloads.php') ) {
-				echo '<div class="error"><p>' . sprintf( __( 'You must install %sEasy Digital Downloads%s to use %s.', 'edd-purchase-rewards' ), '<a href="http://easydigitaldownloads.com" title="Easy Digital Downloads" target="_blank">', '</a>', $this->title ) . '</p></div>';
-			}
-
-			if ( $edd_plugin_data['Version'] < '1.9' ) {
-				echo '<div class="error"><p>' . sprintf( __( '%s requires Easy Digital Downloads Version 1.9 or greater. Please update Easy Digital Downloads.', 'edd-purchase-rewards' ), $this->title ) . '</p></div>';
-			}
 		}
 
 		/**
@@ -282,31 +233,38 @@ if ( ! class_exists( 'EDD_Purchase_Rewards' ) ) {
 		}
 
 	}
-}
 
-/**
- * Loads a single instance of EDD Purchase Rewards
- *
- * This follows the PHP singleton design pattern.
- *
- * Use this function like you would a global variable, except without needing
- * to declare the global.
- *
- * @example <?php $edd_purchase_rewards = edd_purchase_rewards(); ?>
- *
- * @since 1.0
- *
- * @see EDD_Purchase_Rewards::get_instance()
- *
- * @return object Returns an instance of the EDD_Purchase_Rewards class
- */
-function edd_purchase_rewards() {
-	return EDD_Purchase_Rewards::get_instance();
-}
+	/**
+	 * Loads a single instance
+	 *
+	 * This follows the PHP singleton design pattern.
+	 *
+	 * Use this function like you would a global variable, except without needing
+	 * to declare the global.
+	 *
+	 * @example <?php $edd_purchase_rewards = edd_purchase_rewards(); ?>
+	 *
+	 * @since 1.0
+	 *
+	 * @see EDD_Purchase_Rewards::get_instance()
+	 *
+	 * @return object Returns an instance of the EDD_Purchase_Rewards class
+	 */
+	function edd_purchase_rewards() {
 
-/**
- * Loads plugin after all the others have loaded and have registered their hooks and filters
- *
- * @since 1.0
-*/
-add_action( 'plugins_loaded', 'edd_purchase_rewards', apply_filters( 'edd_purchase_rewards_action_priority', 10 ) );
+	    if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+
+	        if ( ! class_exists( 'EDD_Extension_Activation' ) ) {
+	            require_once 'includes/class-activation.php';
+	        }
+
+	        $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
+	        $activation = $activation->run();
+	        
+	    } else {
+	        return EDD_Purchase_Rewards::get_instance();
+	    }
+	}
+	add_action( 'plugins_loaded', 'edd_purchase_rewards', apply_filters( 'edd_purchase_rewards_action_priority', 10 ) );
+
+}

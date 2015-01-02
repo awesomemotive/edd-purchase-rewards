@@ -3,8 +3,8 @@ Contributors: sumobi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EFUPMPEZPGW7L
 Tags: easy digital downloads, digital downloads, e-downloads, edd, sumobi, purchase, e-commerce
 Requires at least: 3.8
-Tested up to: 4.0.1
-Stable tag: 1.0.5
+Tested up to: 4.1
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,10 +86,13 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 
 == Upgrade Notice ==
 
-= 1.0.5 =
-Fix: When "Force Share For Discount Reward" was not enabled the sharing script loaded onto other pages. This caused a conflict with EDD Social Discounts.
+= 1.0.6 =
+Fix: Plugin deactivating when EDD was updated.
 
 == Changelog ==
+
+= 1.0.6 =
+Fix: Plugin deactivating when EDD was updated.
 
 = 1.0.5 =
 Fix: When "Force Share For Discount Reward" was not enabled the sharing script loaded onto other pages. This caused a conflict with EDD Social Discounts.
