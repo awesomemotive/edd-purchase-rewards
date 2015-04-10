@@ -88,17 +88,21 @@ class EDD_Purchase_Rewards_Functions {
 	 * @return int payment ID
 	 */
 	public function get_payment_id() {
+		// get payment key from query string if it exists
+		$payment_key = isset( $_GET['payment_key'] ) ? $_GET['payment_key'] : '';	
+
 		// get purchase session
-		$purchase_session 	= edd_get_purchase_session();
+		$purchase_session = edd_get_purchase_session();
 		
 		// get the key
-		$purchase_key 		= $purchase_session['purchase_key'];
+		$purchase_key = ! empty( $payment_key ) ? $payment_key : $purchase_session['purchase_key'];
 		
 		// get the payment ID from the purchase key
-		$payment_id 		= edd_get_purchase_id_by_key( $purchase_key );
+		$payment_id = edd_get_purchase_id_by_key( $purchase_key );
 
-		if ( $payment_id )
+		if ( $payment_id ) {
 			return $payment_id;
+		}
 
 		return null;
 	}

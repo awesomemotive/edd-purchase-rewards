@@ -13,10 +13,8 @@ function edd_purchase_rewards_display_reward( $content ) {
 	if ( has_shortcode( $post->post_content, 'edd_purchase_rewards' ) )
 		return $content;
 
-	$success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
-
 	// make sure we only add it to the success page
-	if ( $post && $success_page && is_main_query() && ! post_password_required() && in_the_loop() ) {
+	if ( $post && edd_is_success_page() && is_main_query() && ! post_password_required() && in_the_loop() ) {
 		// get the greeting
 		$new_content = edd_purchase_rewards_reward_customer();
 		// prepend it to the content and return
@@ -36,6 +34,17 @@ add_filter( 'the_content', 'edd_purchase_rewards_display_reward' );
  */
 function edd_purchase_rewards_reward_customer() {
 	global $post;
+
+	// get payment ID
+	$payment_id = edd_purchase_rewards()->functions->get_payment_id();
+
+	// get current purchase session
+	$purchase_session = edd_get_purchase_session();
+
+	// only the last purchase reward will show on the purchase confirmation screen
+	if ( ! ( $purchase_session['purchase_key'] == edd_get_payment_key( $payment_id ) ) ) {
+		return;
+	}
 
 	// force the customer to share before receiving reward
 	$force_share = edd_get_option( 'edd_purchase_rewards_force_share' );
@@ -84,17 +93,21 @@ function edd_purchase_rewards_show_reward() {
 
 		<?php
 			// get discount code. Either generated or normal
-			$discount_code 		= edd_purchase_rewards()->discounts->get_discount();
+			$discount_code  = edd_purchase_rewards()->discounts->get_discount();
 
-			$reward_title 		= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_title' ) );
-			$reward_message 	= edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_message' ) );
+			$reward_title   = edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_title' ) );
+			$reward_message = edd_purchase_rewards()->functions->filter_template_tags( edd_get_option( 'edd_purchase_rewards_reward_message' ) );
 		?>
 	
 		<?php if ( $discount_code ) : ?>
 			<div class="edd-pr">
 				<h2><?php echo esc_attr( $reward_title ); ?></h2>
 				<p><?php echo $reward_message; ?></p>
+				
+				<?php if ( apply_filters( 'edd_purchase_rewards_show_discount_code', true ) ) : ?>
 				<h3><?php echo $discount_code; ?></h3>
+				<?php endif; ?>
+
 			</div>
 		<?php endif; ?>
 
@@ -112,7 +125,7 @@ function edd_purchase_rewards_show_reward() {
 
 <?php
 	$html = ob_get_clean();
-	return apply_filters( 'edd_purchase_rewards_show_reward', $html );
+	return apply_filters( 'edd_purchase_rewards_show_reward', $html, $discount_code, $reward_title, $reward_message, $sharing_enabled );
 }
 
 /**
@@ -141,6 +154,7 @@ function edd_purchase_rewards_complete_purchase( $payment_id ) {
 		if ( $can_email ) {
 			edd_purchase_rewards()->emails->send( $email, $payment_id );
 		}
+
 	}
 
 }

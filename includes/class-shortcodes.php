@@ -13,14 +13,14 @@ class EDD_Purchase_Rewards_Shortcodes {
 		static $done = false;
 
 	    // Nothing to do
-	    if ( $done )
+	    if ( $done ) {
 	        return;
-
-	    $success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
+	    }
 
 	    // shortcode is only run once, on the success page
-	    if ( $success_page )
+	    if ( edd_is_success_page() ) {
 	        $done = true;
+	    }
 
 		return edd_purchase_rewards_reward_customer();
 

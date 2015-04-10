@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: easy digital downloads, digital downloads, e-downloads, edd, sumobi, purchase, e-commerce
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.0.6
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,13 +81,35 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 
 1. Force customers to share for a specified percentage or flat rate
 1. As soon as the customers have shared, they are rewarded with a discount code. This can be a discount code you've already made, or choose to create one on the spot
-1. The one-time use, unqique discount code is created just for the customer
+1. The one-time use, unique discount code is created just for the customer
 1. A payment note is recorded showing the discount code that was stored against the purchase
 
 == Upgrade Notice ==
 
-= 1.0.6 =
-Fix: Plugin deactivating when EDD was updated.
+= 1.1 =
+Now sends the discount with a beautiful email, new filters for developers, minor bug fix and various tweaks 
+
+= 1.1 =
+
+New: Passed more variables to the edd_purchase_rewards_show_reward filter, making it easier to customize what is shown on the purchase confirmation page.
+
+New: Added edd_purchase_rewards_show_discount_code filter for hiding the discount on the purchase confirmation page.
+
+New: Discount email is now sent using EDD's new email class.
+
+New: The Reward Email textarea has been replaced with a WP Editor field
+
+New: Added an edd_purchase_rewards_email_subject filter for changing the email's subject line.
+
+New: Added an edd_purchase_rewards_email_heading filter for changing the email's main heading.
+
+Fix: Fixed an issue where the last purchase reward in the EDD purchase session was shown on each of the purchase history pages. Now only the very last reward will show on the main purchase confirmation page. 
+
+Tweak: Changed instances of edd_get_option( 'success_page' ) to the edd_is_success_page helper function.
+
+Tweak: Various formatting and code cleanup enhancements.
+
+Tweak: Removed {site_url} from default email since EDD's new emails include this by default in the email footer
 
 == Changelog ==
 

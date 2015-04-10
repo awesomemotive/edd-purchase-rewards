@@ -109,13 +109,13 @@ class EDD_Purchase_Rewards_Settings {
 			array(
 				'id' 		=> 'edd_purchase_rewards_email',
 				'name' 		=> __( 'Reward Email', 'edd-purchase-rewards' ),
-				'type' 		=> 'textarea',
+				'type' 		=> 'rich_editor',
 				'desc' 		=> '<p class="description">' . __( 'Enter the email message you\'d like your customers to receive when they receive their discount code. Use template tags below to customize the email.', 'edd-purchase-rewards' ) . '<br/>' .
 							'{name} - ' . __( 'The customer\'s name', 'edd-purchase-rewards' ) . '<br/>' .
 							'{discount_code} - ' . __( 'The discount code the customer is receiving', 'edd-purchase-rewards' ) . '<br/>' .
 							'{site_name} - ' . __( 'Your site name', 'edd-purchase-rewards' ) . '<br/>' .
 							'{site_url} - ' . __( 'Your site\'s URL', 'edd-purchase-rewards' ) . '</p>',
-				'std' 		=> __( "Hello {name},\n\nHere is your discount code that you can use on your next purchase:\n\n{discount_code}\n\nEnjoy!\n\n{site_name}\n{site_url}", "edd-purchase-rewards" )
+				'std' 		=> __( "Hello {name},\n\nHere is your discount code that you can use on your next purchase:\n\n{discount_code}\n\nEnjoy!\n\n{site_name}", "edd-purchase-rewards" )
 			),
 			array(
 				'id' 		=> 'edd_purchase_rewards_sharing_twitter_message',
